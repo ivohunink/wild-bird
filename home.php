@@ -1,76 +1,79 @@
 <?php
-	# Include classes
-	include("PimaticDevice.class.php");
-	include("Functions.inc.php");
-	
+	# Include Init file
+	include_once("./includes/Init.inc.php");
+		
 	# Error reporting on
 	error_reporting(E_ALL);
 
 	# Init variables
-	logMessage("Starting script");
 	$deviceName = false;
+	$deviceGroup = false;
 	$mode = false;
 	$devices = array();
+	$affectedDevices = array();
 	
+	# Define devices, groups and dimlevels
 	$devices['hallway'] = 'hal';
 	$devices['couch'] = 'bank';
-	$devices['sofa'] = 'bank';
+	$devices['four'] = 'bank';
 	$devices['television'] = 'televisie-meubel';
-	$devices['dining room'] = 'eettafel';
+	$devices['three'] = 'televisie-meubel';
 	$devices['dining table'] = 'eettafel';
-	$devices['kitchen'] = 'keuken';
-	$devices['coffee-corner'] = 'koffie-corner';
+	$devices['two'] = 'eettafel';
+	$devices['kitchen light'] = 'keuken';
+	$devices['one'] = 'keuken';
+	$devices['coffee corner'] = 'koffie-corner';
+	$devices['zero'] = 'koffie-corner';
 
+	$groups = array();
+	$groups['dining room'] = 'eettafel';
+	$groups['living room'] = 'bank,televisie-meubel';
+	$groups['kitchen'] = 'keuken,koffie-corner';
+
+	$dimlevels = array();
+	$dimlevels['max'] = 100;
+	$dimlevels['high'] = 80;
+	$dimlevels['medium'] = 50;
+	$dimlevels['low'] = 28;
+	$dimlevels['default'] = 50;
+
+	logMessage("Starting script");
 	# Check mode
 	if(isset($_GET["mode"])){
 		$mode = $_GET["mode"];
 		
-		# In case of mode for specific device
+		# In case of mode for specific device or group of devices
 		if($mode == "on" or $mode == "off" or $mode == "dim"){
-			logMessage("Mode for specific Pimatic device", $mode);
-			$tempDeviceName = trim($_GET["device"]);
-			$tempDeviceName = str_replace("the", "", $tempDeviceName);
-			$tempDeviceName = str_replace("at", "", $tempDeviceName);
-			$tempDeviceName = str_replace("its", "", $tempDeviceName);
-			$tempDeviceName = str_replace("it's", "", $tempDeviceName);
-			$tempDeviceName = str_replace("of", "", $tempDeviceName);
-			$tempDeviceName = trim($tempDeviceName);
-
-			if(isset($devices[$tempDeviceName])) {
+			$tempDeviceName = false;
+			if(isset($_GET["device"])){
+				$tempDeviceName = strip($_GET["device"]);
+			}
+			if($tempDeviceName !== false && isset($groups[$tempDeviceName])) {
+				logMessage("Searching for Pimatic device group", $tempDeviceName);
+				$deviceGroup = $groups[$tempDeviceName];
+				$affectedDevices = explode(",", $deviceGroup);
+			} else if($tempDeviceName !== false && isset($devices[$tempDeviceName])) {
+				logMessage("Searching for Pimatic device", $tempDeviceName);
 				$deviceName = $devices[$tempDeviceName];
+				$affectedDevices[] = $deviceName;
+			} else if($tempDeviceName !== false && $tempDeviceName == "all"){
+				logMessage("Mode for all Pimatic devices", $mode);
+				#$deviceNames = array_flip($devices);	
+				$affectedDevices = $devices;
 			}
+		}
 
-			logMessage("Searching for Pimatic device", $tempDeviceName);
+		$dimlevel = 0;
+		if($mode == "dim" && isset($_GET["dimlevel"]) && isset($dimlevels[strip($_GET['dimlevel'])])){
+			$dimlevel = $dimlevels[strip($_GET["dimlevel"])];
+		} else if($mode == "on"){
+			$dimlevel = $dimlevels['medium'];	
+		}
 
-			if ($deviceName !== false){
-				$device = new PimaticDevice($deviceName);
-				if($_GET["mode"] == "on"){
-					# Test
-					$device->callDeviceAction("changeDimlevelTo", "dimlevel", "50");
-				} else if ($_GET["mode"] == "dim"){
-					$device->callDeviceAction("changeDimlevelTo", "dimlevel", trim($_GET["dimlevel"]));
-				} else {
-					$device->callDeviceAction("changeDimlevelTo", "dimlevel", "0");
-				}
-			} else {
-				logMessage("Pimatic device not found", $tempDeviceName);
-			}
-		} else if ($mode == "all-off" or $mode == "all-on" or $mode == "all-dim" or $mode == "romantic"){
-			logMessage("Mode for all Pimatic devices", $mode);
-			$dimlevel = 0;
-			if($mode == "all-dim" && isset($_GET["dimlevel"])){
-				$dimlevel = trim($_GET["dimlevel"]);
-			} else if($mode == "romantic"){
-				$dimlevel = 28;
-			} else if($mode == "all-on"){
-				$dimlevel = 50;
-			}
-			$deviceNames = array_flip($devices);	
-			foreach ($deviceNames as $deviceName => $temp) {
-				logMessage("Dimming ($dimlevel)", $deviceName);
-				$device = new PimaticDevice($deviceName);
-				$device->callDeviceAction("changeDimlevelTo", "dimlevel", $dimlevel);
-			}
+		foreach ($affectedDevices as $deviceName) {
+			logMessage("Dimming ($dimlevel)", $deviceName);
+			$device = new PimaticDevice($deviceName);
+			$device->callDeviceAction("changeDimlevelTo", "dimlevel", $dimlevel);
 		}
 	}
 ?>
