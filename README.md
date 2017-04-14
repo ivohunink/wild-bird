@@ -1,4 +1,4 @@
-## wild-bird
+## Wild bird (wild-bird)
 
 Wild bird is a personal home-automation project written in PHP.
 
