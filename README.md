@@ -21,7 +21,7 @@ TODO: Write usage instructions
 
 ## History
 
-Initial version.
+2017/04/14. Initial version.
 
 ## Credits
 
@@ -30,3 +30,11 @@ Ivo Hunink
 ## License
 
 The MIT License.
+
+## Roadmap
+
+- Validate configuration file before starting
+- Proper logging
+- Turn WildBird into Singleton
+- Rename WildBirdAdmin to WildBird
+

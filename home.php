@@ -1,25 +1,32 @@
 <?php
-	# Include Init file
+	# Initialize WildBird - let her fly!
 	include_once("./includes/Init.inc.php");
-	# Error reporting on
-	error_reporting(E_ALL);
-	logMessage("Starting script");
-	# Check mode
-	if(isset($_GET["mode"])){
-		$mode = $_GET["mode"];
-		
-		$tempDeviceName = false;
-		if(isset($_GET["device"])){
-			$tempDeviceName = strip($_GET["device"]);
-		}
 
-		# In case of mode for specific device or group of devices
-		if($mode == "on" or $mode == "dim"){
-			logMessage("On", $tempDeviceName);
-			$wildbird->on($tempDeviceName);
-		} else {
-			logMessage("Off", $tempDeviceName);
-			$wildbird->off($tempDeviceName);
+	logMessage("Starting script");
+
+	# Check mode and device
+	isset($_GET['mode']) ? $_GET['mode'] : false;
+	isset($_GET['device']) ? $_GET['device'] : false;
+	$mode = $_GET['mode'];
+	$device = $_GET['device'];
+
+	if($mode !== false && $device !== false) {
+		$deviceName = strip($device);
+		
+		switch($mode) {
+			case "on":
+				WildBird::Instance()->on($deviceName);
+				break;
+			case "dim":
+				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "full";
+				$dimlevel = $_GET['dimlevel'];
+				WildBird::Instance()->on($deviceName, $dimlevel);
+				break;
+			case "off":
+				WildBird::Instance()->off($deviceName);
+				break;
+			default:
+				// Todo: log
 		}
 	}
 ?>
