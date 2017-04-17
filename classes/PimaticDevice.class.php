@@ -23,11 +23,14 @@ class PimaticDevice {
 		return $this->callPimatic($url);
 	}
 
-	public function callDeviceAction ($deviceAction, $param, $paramValue){
+	public function callDeviceAction ($deviceAction, $param = false, $paramValue = false){
 		logMessage("Calling Pimatic device action", $deviceAction);
 		$apiAction = "device";
 		$url = $this->buildPimaticBasicUrl($apiAction);
-		$url .= "/$deviceAction?$param=$paramValue";
+		$url .= "/$deviceAction";
+		if($param !== false){
+			$url .= "?$param=$paramValue";
+		}
 		$this->callPimatic($url);
 	}
 

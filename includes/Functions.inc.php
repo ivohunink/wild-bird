@@ -15,7 +15,14 @@
 		$string = str_replace("its ", "", $string);
 		$string = str_replace("it's ", "", $string);
 		$string = str_replace("of ", "", $string);
+		$string = str_replace("all ", "", $string);
 		$string = trim($string);
 		return $string;
+	}
+
+	function load_config(){
+		$config = json_decode(file_get_contents('./config/config.json'), true);
+		$wildbird = new WildBirdAdmin($config);
+		return $wildbird;
 	}
 ?>
