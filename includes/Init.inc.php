@@ -7,7 +7,7 @@
 	include_once("classes/AbstractLight.class.php");
 	include_once("classes/DimLight.class.php");
 	include_once("classes/SwitchLight.class.php");
-	include_once("classes/WildBirdAdmin.class.php");
+	include_once("classes/WildBird.class.php");
 	
 	# Include include files
 	include_once("Functions.inc.php");

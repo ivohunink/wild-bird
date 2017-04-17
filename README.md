@@ -35,6 +35,4 @@ The MIT License.
 
 - Validate configuration file before starting
 - Proper logging
-- Turn WildBird into Singleton
-- Rename WildBirdAdmin to WildBird
-
+- Add unit testing
