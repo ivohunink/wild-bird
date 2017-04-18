@@ -46,3 +46,5 @@ The MIT License.
 - Add config.dist.json
 - Move Pimatic API details to config.json
 - Add PushBullet for logging
+- Fix logging in CURL call (currently, it continues even after CURL fails)
+- Pass back errors up the chain from PimaticDevice to AbstractLight to WildBird

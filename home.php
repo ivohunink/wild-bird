@@ -11,21 +11,19 @@
 	# Check mode and device
 	isset($_GET['mode']) ? $_GET['mode'] : false;
 	isset($_GET['device']) ? $_GET['device'] : false;
+	isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
 	$mode = $_GET['mode'];
 	$device = $_GET['device'];
+	$dimlevel = $_GET['dimlevel'];
 
 	if($mode !== false && $device !== false) {
 		$deviceName = strip($device);
 		
 		switch($mode) {
 			case "on":
-				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
-				$dimlevel = $_GET['dimlevel'];
 				WildBird::Instance()->on($deviceName, $dimlevel);
 				break;
 			case "dim":
-				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
-				$dimlevel = $_GET['dimlevel'];
 				WildBird::Instance()->on($deviceName, $dimlevel);
 				break;
 			case "off":

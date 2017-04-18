@@ -16,11 +16,24 @@ class PimaticDevice {
 	{
 		return $this->name;
 	}
+	
+	private function isSuccesfull($arrayResult)
+	{
+		$success = false;
+		//$arrayResult = json_decode($jsonResult, true); 
+		if(is_array($arrayResult) && isset($arrayResult['success']) && $arrayResult['success'] == 'true'){
+			$success = true;
+			logMessage("Call Succesfull");
+		} else {
+			logMessage("Call Unsuccesfull");
+		}
+		return $success;
+	}
 
 	public function getDeviceInfo(){
 		$apiAction = "devices";
 		$url = $this->buildPimaticBasicUrl($apiAction);
-		return $this->callPimatic($url);
+		return $this->isSuccesfull($this->callPimatic($url));
 	}
 
 	public function callDeviceAction ($deviceAction, $param = false, $paramValue = false){
@@ -31,7 +44,7 @@ class PimaticDevice {
 		if($param !== false){
 			$url .= "?$param=$paramValue";
 		}
-		$this->callPimatic($url);
+		return $this->isSuccesfull($this->callPimatic($url));
 	}
 
 	private function buildPimaticBasicUrl($apiAction){
