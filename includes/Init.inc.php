@@ -11,4 +11,8 @@
 	
 	# Include include files
 	include_once("Functions.inc.php");
+	
+	# Include Composer Autoload
+	require_once('vendor/autoload.php');
+
 ?>

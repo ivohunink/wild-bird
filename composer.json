@@ -1,0 +1,5 @@
+{
+    "require": {
+        "joetannenbaum/phpushbullet": "~1.0"
+    }
+}

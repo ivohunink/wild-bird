@@ -8,7 +8,14 @@ TODO: Describe the installation process
 
 ## Usage
 
-TODO: Write usage instructions
+TODO: Finalize usage instructions
+1. Install and configure Pimatic
+2. Download wild-bird (git clone https://github.com/ivohunink/wild-bird)
+3. Download and install Composer (https://getcomposer.org/doc/00-intro.md) and run "Composer install" to download wild-bird's dependencies
+2. Copy wildbird/config/config.dist.json to wildbird/config/config.json
+3. Add Pimatic API details in config.json
+4. Add the switch and dim lights you want to control to the config.json configuration file
+5. ... Something about IFTTT
 
 ## Contributing
 
@@ -33,6 +40,9 @@ The MIT License.
 
 ## Roadmap
 
-- Validate configuration file before starting
+- Validate config.json configuration file before starting
 - Proper logging
 - Add unit testing
+- Add config.dist.json
+- Move Pimatic API details to config.json
+- Add PushBullet for logging

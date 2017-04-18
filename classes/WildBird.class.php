@@ -42,6 +42,7 @@
 		
 		public function on($calledName = true, $dimlevel = "default"){
 			logMessage("Calling everything 'On' that matches", $calledName);
+			logMessage("Dimlevel",$dimlevel);
 			foreach ($this->lights as $light){
 				$light->on($calledName, $dimlevel);
 			}

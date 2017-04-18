@@ -3,7 +3,11 @@
 	include_once("./includes/Init.inc.php");
 
 	logMessage("Starting script");
-
+	
+	$pushbullet = new PHPushbullet\PHPushbullet('o.V5CyTeDxQXSsT5Tx7yEHRvuz8PUjemBC');
+	$pushbullet->all();
+	$pushbullet->note('WildBird', $_SERVER['REQUEST_URI']);
+	
 	# Check mode and device
 	isset($_GET['mode']) ? $_GET['mode'] : false;
 	isset($_GET['device']) ? $_GET['device'] : false;
@@ -15,10 +19,12 @@
 		
 		switch($mode) {
 			case "on":
-				WildBird::Instance()->on($deviceName);
+				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
+				$dimlevel = $_GET['dimlevel'];
+				WildBird::Instance()->on($deviceName, $dimlevel);
 				break;
 			case "dim":
-				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "full";
+				isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
 				$dimlevel = $_GET['dimlevel'];
 				WildBird::Instance()->on($deviceName, $dimlevel);
 				break;

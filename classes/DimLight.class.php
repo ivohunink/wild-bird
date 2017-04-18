@@ -4,7 +4,12 @@ class DimLight extends AbstractLight {
 
 	function __construct($dimlightConfig, $defaultDimlevels){
 		parent::__construct($dimlightConfig);
-		$this->dimlevels = $defaultDimlevels;
+		if(isset($dimlightConfig['dimlevels'])){
+			$this->dimlevels = array_merge($defaultDimlevels, $dimlightConfig['dimlevels']);
+		} else {
+			$this->dimlevels = $defaultDimlevels;
+		}
+		print_r($this->dimlevels);
 	}	
 	
 	/*
@@ -26,6 +31,7 @@ class DimLight extends AbstractLight {
 	 * @dimlevel (string) Optional dimlevel
 	 */
 	private function dim($dimlevel = "default") {
+		logMessage("Dimlevel",$dimlevel);
 		$device = new PimaticDevice($this->name);
 		$device->callDeviceAction("changeDimlevelTo", "dimlevel", $this->dimlevels[$dimlevel]);
 	}
@@ -38,6 +44,7 @@ class DimLight extends AbstractLight {
 	 * @dimlevel (string) Optional dimlevel
 	 */
 	protected function turnOn($dimlevel = "default") {
+		logMessage("Dimlevel",$dimlevel);
 		$this->dim($dimlevel);
 	}
 } 
