@@ -9,12 +9,9 @@
 	$pushbullet->note('WildBird', $_SERVER['REQUEST_URI']);
 	
 	# Check mode and device
-	isset($_GET['mode']) ? $_GET['mode'] : false;
-	isset($_GET['device']) ? $_GET['device'] : false;
-	isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
-	$mode = $_GET['mode'];
-	$device = $_GET['device'];
-	$dimlevel = $_GET['dimlevel'];
+	$mode = isset($_GET['mode']) ? $_GET['mode'] : false;
+	$device = isset($_GET['device']) ? $_GET['device'] : false;
+	$dimlevel = isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
 
 	if($mode !== false && $device !== false) {
 		$deviceName = strip($device);

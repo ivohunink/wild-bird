@@ -9,9 +9,27 @@ class DimLight extends AbstractLight {
 		} else {
 			$this->dimlevels = $defaultDimlevels;
 		}
-		print_r($this->dimlevels);
 	}	
+
+	/*
+	 * function getDimlevel
+	 *
+	 * Returns dimlevel of for dimlevel string.
+	 *
+	 * @return (int)
+	 */
+	public function getDimlevel($dimlevel){
+		$intDimlevel = 50;
 	
+		if (isset($this->dimlevels[$dimlevel])) {
+			$intDimlevel = $this->dimlevels[$dimlevel];
+		} else if (isset($this->dimlevels["default"])){
+			$intDimlevel = $this->dimlevels["default"];
+		}
+	
+		return $intDimlevel;
+	}
+
 	/*
 	 * function getDimlevels
 	 *
@@ -33,7 +51,7 @@ class DimLight extends AbstractLight {
 	private function dim($dimlevel = "default") {
 		logMessage("Dimlevel",$dimlevel);
 		$device = new PimaticDevice($this->name);
-		$device->callDeviceAction("changeDimlevelTo", "dimlevel", $this->dimlevels[$dimlevel]);
+		$device->callDeviceAction("changeDimlevelTo", "dimlevel", $this->getDimlevel($dimlevel));
 	}
 	
 	/*
