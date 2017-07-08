@@ -1,0 +1,85 @@
+{ 
+        "dimlevels":{  
+            	"full":100,
+            	"high":75,
+		"default": 50,
+            	"medium":40,
+            	"low":25,
+		"romantic": 25
+        },
+	"switchlights":[  
+        	{
+			"name":"hal",
+			"synonyms":[
+				"hallway"
+			],
+			"groups":[
+				"house"
+			]
+		}
+	],
+ 	"dimlights":[  
+        	{
+			"name":"televisie-meubel",
+			"synonyms":[
+				"television"
+			],
+			"groups":[
+				"house",
+				"living room",
+				"lights",
+				"holiday"
+			]
+		},
+        	{
+			"name":"eettafel",
+			"synonyms":[
+				"dining table"
+			],
+			"groups":[
+				"house",
+				"dining room",
+				"lights"
+			]
+		},
+		{
+			"name":"koffie-corner",
+			"synonyms":[
+				"coffee corner"
+			],
+			"groups":[
+				"house",
+				"kitchen",
+				"lights"
+			]
+		},
+        	{
+			"name":"bank",
+			"synonyms":[
+				"couch"
+			],
+			"groups":[
+				"house",
+				"living room",
+				"lights",
+				"holiday"
+			],
+        		"dimlevels":{  
+				"high":60,
+				"default": 15,
+				"medium":15,
+				"low":10,
+				"romantic": 1
+			}
+		},
+        	{
+			"name":"keuken",
+			"groups":[
+				"house",
+				"kitchen",
+				"lights",
+				"holiday"
+			]
+		}
+	]
+}
