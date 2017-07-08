@@ -100,10 +100,30 @@ abstract class AbstractLight {
 	 */
 	public function isCalled($calledName){
 		$isCalled = false;
-		if($this->name == $calledName or in_array($calledName, $this->synonyms) or in_array($calledName, $this->groups)){
+		//Old method for checking, in which we check whether or not the name is exactly the same as the called name
+		//if($this->name == $calledName or in_array($calledName, $this->synonyms) or in_array($calledName, $this->groups)){
+		//	$isCalled = true;
+		//	logMessage("Called", $calledName);	
+		//}
+
+		//New method for checking, in which we check whether or not the name is mentioned in the called string
+		if(stristr($calledName, $this->name)){
 			$isCalled = true;
-			logMessage("Called", $calledName);	
+			logMessage("Called", $calledName . " (Matched against name: ".$this->name.")");	
 		}
+		foreach($this->synonyms as $synonym){
+			if(stristr($calledName, $synonym)){
+				$isCalled = true;
+				logMessage("Called", $calledName . " (Matched against synonym: ".$synonym.")");	
+			}
+		}		
+		foreach($this->groups as $group){
+			if(stristr($calledName, $group)){
+				$isCalled = true;
+				logMessage("Called", $calledName . " (Matched against group: ".$group.")");	
+			}
+		}		
+		
 		return $isCalled;
 	}
 }
