@@ -4,30 +4,50 @@
 
 	logMessage("Starting script");
 	
-	$pushbullet = new PHPushbullet\PHPushbullet('o.V5CyTeDxQXSsT5Tx7yEHRvuz8PUjemBC');
-	$pushbullet->all();
-	$pushbullet->note('WildBird', $_SERVER['REQUEST_URI']);
-	
 	# Check mode and device
 	$mode = isset($_GET['mode']) ? $_GET['mode'] : false;
 	$device = isset($_GET['device']) ? $_GET['device'] : false;
 	$dimlevel = isset($_GET['dimlevel']) ? $_GET['dimlevel'] : "default";
 
+	$affectedLights = 0;
+	$overallLogMessage = "";
+
 	if($mode !== false && $device !== false) {
-		$deviceName = strip($device);
+		$calledString = strip($device);
 		
 		switch($mode) {
 			case "on":
-				WildBird::Instance()->on($deviceName, $dimlevel);
+				$affectedLights = WildBird::Instance()->on($calledString, $dimlevel);
+				$overallLogMessage .= $affectedLights;
+				$overallLogMessage .= " lights turned on (";
+				$overallLogMessage .= $calledString;
+				$overallLogMessage .= ")";
+				
 				break;
 			case "dim":
-				WildBird::Instance()->on($deviceName, $dimlevel);
+				$affectedLights = WildBird::Instance()->on($calledString, $dimlevel);
+				$overallLogMessage .= $affectedLights;
+				$overallLogMessage .= " lights dimmed to ".$dimlevel." on (";
+				$overallLogMessage .= $calledString;
+				$overallLogMessage .= ")";
 				break;
 			case "off":
-				WildBird::Instance()->off($deviceName);
+				$affectedLights = WildBird::Instance()->off($calledString);
+				$overallLogMessage .= $affectedLights;
+				$overallLogMessage .= " lights turned off (";
+				$overallLogMessage .= $calledString;
+				$overallLogMessage .= ")";
 				break;
 			default:
+				$overallLogMessage .= "No lights affected (";
+				$overallLogMessage .= $calledString;
+				$overallLogMessage .= ")";
 				// Todo: log
 		}
 	}
+	
+	$pushbullet = new PHPushbullet\PHPushbullet('o.V5CyTeDxQXSsT5Tx7yEHRvuz8PUjemBC');
+	$pushbullet->all();
+	$pushbullet->note('WildBird', $overallLogMessage . " (" . $_SERVER['REQUEST_URI'] . ")");
+	
 ?>

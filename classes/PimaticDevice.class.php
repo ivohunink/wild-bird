@@ -2,6 +2,7 @@
 class PimaticDevice {
 	private $name;
 
+	//TODO Move to config.json
 	private $config_host = "192.168.0.108";
 	private $config_user = "admin";
 	private $config_passwd = "vlaamsegaai";

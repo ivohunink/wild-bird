@@ -21,10 +21,13 @@ abstract class AbstractLight {
 	 *
 	 * @dimlevel (string) Optional dimlevel.
 	 */
-	public function on($calledName = true, $dimlevel = "default") {
-		if($this->isCalled($calledName) or $calledName === true){
+	public function on($calledString = true, $dimlevel = "default") {
+		$called = false;
+		if($this->isCalled($calledString) or $calledString === true){
 			$this->turnOn($dimlevel);
+			$called = true;
 		}
+		return $called;
 	}
 
 	/*
@@ -32,11 +35,14 @@ abstract class AbstractLight {
 	 *
 	 * Checks if the light is called, and then turns the light off.
 	 */
-	public function off($calledName = true) {
-		if($this->isCalled($calledName) or $calledName === true){
+	public function off($calledString = true) {
+		$called = false;
+		if($this->isCalled($calledString) or $calledString === true){
 			logMessage("Turn off", $this->name);
 			$this->turnOff();
+			$called = true;
 		}
+		return $called;
 	}
 	
 	/*
@@ -98,29 +104,29 @@ abstract class AbstractLight {
 	 *
 	 * @return (array)
 	 */
-	public function isCalled($calledName){
+	public function isCalled($calledString){
 		$isCalled = false;
 		//Old method for checking, in which we check whether or not the name is exactly the same as the called name
-		//if($this->name == $calledName or in_array($calledName, $this->synonyms) or in_array($calledName, $this->groups)){
+		//if($this->name == $calledString or in_array($calledString, $this->synonyms) or in_array($calledString, $this->groups)){
 		//	$isCalled = true;
-		//	logMessage("Called", $calledName);	
+		//	logMessage("Called", $calledString);	
 		//}
 
 		//New method for checking, in which we check whether or not the name is mentioned in the called string
-		if(stristr($calledName, $this->name)){
+		if(stristr($calledString, $this->name)){
 			$isCalled = true;
-			logMessage("Called", $calledName . " (Matched against name: ".$this->name.")");	
+			logMessage("Called", $calledString . " (Matched against name: ".$this->name.")");	
 		}
 		foreach($this->synonyms as $synonym){
-			if(stristr($calledName, $synonym)){
+			if(stristr($calledString, $synonym)){
 				$isCalled = true;
-				logMessage("Called", $calledName . " (Matched against synonym: ".$synonym.")");	
+				logMessage("Called", $calledString . " (Matched against synonym: ".$synonym.")");	
 			}
 		}		
 		foreach($this->groups as $group){
-			if(stristr($calledName, $group)){
+			if(stristr($calledString, $group)){
 				$isCalled = true;
-				logMessage("Called", $calledName . " (Matched against group: ".$group.")");	
+				logMessage("Called", $calledString . " (Matched against group: ".$group.")");	
 			}
 		}		
 		

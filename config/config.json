@@ -22,7 +22,8 @@
         	{
 			"name":"televisie-meubel",
 			"synonyms":[
-				"television"
+				"television",
+				"tv light"
 			],
 			"groups":[
 				"house",
@@ -47,7 +48,8 @@
 		{
 			"name":"koffie-corner",
 			"synonyms":[
-				"coffee corner"
+				"coffee corner",
+				"coffee light"
 			],
 			"groups":[
 				"house",
@@ -58,7 +60,9 @@
         	{
 			"name":"bank",
 			"synonyms":[
-				"couch"
+				"couch",
+				"sofa",
+				"chesterfield"
 			],
 			"groups":[
 				"house",

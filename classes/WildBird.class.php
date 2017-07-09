@@ -33,19 +33,27 @@
 			}
 		}
 
-		public function off($calledName = true){
-			logMessage("Calling everything 'Off' that matches", $calledName);
+		public function off($calledString = true){
+			$affectedLigths = 0;
+			logMessage("Calling everything 'Off' that matches", $calledString);
 			foreach ($this->lights as $light){
-				$light->off($calledName);
+				if($light->off($calledString, $dimlevel)){
+					$affectedLigths++;
+				}
 			}
+			return $affectedLigths;
 		}
 		
-		public function on($calledName = true, $dimlevel = "default"){
-			logMessage("Calling everything 'On' that matches", $calledName);
+		public function on($calledString = true, $dimlevel = "default"){
+			$affectedLigths = 0;
+			logMessage("Calling everything 'On' that matches", $calledString);
 			logMessage("Dimlevel",$dimlevel);
 			foreach ($this->lights as $light){
-				$light->on($calledName, $dimlevel);
+				if($light->on($calledString, $dimlevel)){
+					$affectedLigths++;
+				}
 			}
+			return $affectedLigths;
 		}
 	}
 ?>
