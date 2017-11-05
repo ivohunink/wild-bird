@@ -45,9 +45,11 @@
 				// Todo: log
 		}
 	}
-	
-	$pushbullet = new PHPushbullet\PHPushbullet('o.V5CyTeDxQXSsT5Tx7yEHRvuz8PUjemBC');
+
+	//Todo: Add this to config file	
+	$pushbullet = new PHPushbullet\PHPushbullet('o.OzKkwlgHhj4Q1SuQ2AkxxlJkGjFukUug');
 	$pushbullet->all();
-	$pushbullet->note('WildBird', $overallLogMessage . " (" . $_SERVER['REQUEST_URI'] . ")");
+	//print_r($pushbullet->devices());
+	$pushbullet->device('ujCAvz89RZcsjAbaDPGBDE')->note('WildBird', $overallLogMessage . " (" . $_SERVER['REQUEST_URI'] . ")");
 	
 ?>

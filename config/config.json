@@ -7,18 +7,29 @@
             	"low":25,
 		"romantic": 25
         },
-	"switchlights":[  
-        	{
-			"name":"hal",
+ 	"dimlights":[  
+		{
+			"name":"koffie-corner",
 			"synonyms":[
-				"hallway"
+				"coffee corner",
+				"coffee",
+				"coffee light"
 			],
 			"groups":[
-				"house"
+				"house",
+				"kitchen",
+				"lights"
 			]
-		}
-	],
- 	"dimlights":[  
+		},
+        	{
+			"name":"keuken",
+			"groups":[
+				"house",
+				"kitchen",
+				"lights",
+				"holiday"
+			]
+		},
         	{
 			"name":"televisie-meubel",
 			"synonyms":[
@@ -45,18 +56,6 @@
 				"lights"
 			]
 		},
-		{
-			"name":"koffie-corner",
-			"synonyms":[
-				"coffee corner",
-				"coffee light"
-			],
-			"groups":[
-				"house",
-				"kitchen",
-				"lights"
-			]
-		},
         	{
 			"name":"bank",
 			"synonyms":[
@@ -77,14 +76,16 @@
 				"low":10,
 				"romantic": 1
 			}
-		},
+		}
+	],
+	"switchlights":[  
         	{
-			"name":"keuken",
+			"name":"hal",
+			"synonyms":[
+				"hallway"
+			],
 			"groups":[
-				"house",
-				"kitchen",
-				"lights",
-				"holiday"
+				"house"
 			]
 		}
 	]

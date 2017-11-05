@@ -20,16 +20,17 @@
 
 		private function __construct(){
 			# Load configurtion from file
+			// Todo: Check if config file is there. If not, throw error.
 			$config = json_decode(file_get_contents('./config/config.json'), true);
 			$this->defaultDimlevels = $config['dimlevels'];
 
-			foreach ($config['switchlights'] as $switchlightConfig){
-				$switchlight = new SwitchLight($switchlightConfig);
-				$this->lights[] = $switchlight;
-			}
 			foreach ($config['dimlights'] as $dimlightConfig){
 				$dimlight = new DimLight($dimlightConfig, $this->defaultDimlevels);
 				$this->lights[] = $dimlight;
+			}
+			foreach ($config['switchlights'] as $switchlightConfig){
+				$switchlight = new SwitchLight($switchlightConfig);
+				$this->lights[] = $switchlight;
 			}
 		}
 
